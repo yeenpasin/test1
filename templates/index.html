@@ -1,1 +1,166 @@
+<!doctype html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- import icon -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" />
+
+    <!-- import bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" integrity="sha512-..."
+        crossorigin="anonymous" />
+
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+
+    <title>Generate Test Data</title>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="font-monospace">Generate Test Data</h1>
+
+        <form id="generateForm" action="/generate" method="post">
+            <br />
+
+
+            <div>
+                <div class="headTxt">
+                    <label for="radio-group" class="font-monospace" id="datatypeH"> Data Types </label>
+                    <label for="field_name" class="font-monospace">Field Name</label>
+                    <label for="options" class="font-monospace">Settings</label>
+                </div>
+            </div>
+
+            <!--
+                <div class="exin" style="display: none;">
+                <input type="text" class="include" name="include" placeholder="Include">
+                <input type="text" class="exclude" name="exclude" placeholder="Exclude">
+                </div>
+                -->
+
+
+
+            <div id="form-rows">
+                <div class="form-row">
+                    <div>
+                        <select class="data_type" name="data_type">
+                            <option value="" disabled selected style="display:none;">- Select -</option>
+                            <option value="personal data" disabled style="color: red;">-- Personal Data --</option>
+                            <option value="Name">Name</option>
+                            <option value="Phone">Phone</option>
+                            <option value="Email">Email</option>
+                            <option value="Username">Username</option>
+                            <option value="password">Password</option>
+                            <option value="IDcard">IDcard</option>
+                            <option value="nameTitle">NameTitle</option>
+                            <option value="job">Job Position</option>
+                            <option value="dateOfbirth">Date of Birth</option>
+                            <option value="" disabled selected style="display:none;">- Select -</option>
+                            <option value="location data" disabled style="color: red;">-- Location Data --</option>
+                            <option value="location">Location (Lat,Lon)</option>
+                            <option value="country">Country</option>
+                            <option value="Address">Address</option>
+                            <option value="IPAddress">IP Address</option>
+                            <option value="postcode">PostCode</option>
+                            <option value="" disabled selected style="display:none;">- Select -</option>
+                            <option value="other data" disabled style="color: red;">-- Other Data --</option>
+                            <option value="company">Company</option>
+                            <option value="custom">Custom</option>
+                            <option value="color">Color</option>
+                            <option value="currency">Currency</option>
+                            <option value="text">Text</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="text" class="field_name" name="field_name" value="">
+                    </div>
+
+
+                    <div class="options_container">
+                        <select class="options" name="options">
+                            <option value="" disabled selected style="display:none;">- Select -</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="drag-handle"><i class="fas fa-grip-vertical"></i></button>
+                    <button type="button" class="deleteRowBtn"><i class="fas fa-trash-alt"></i></button>
+
+
+                </div>
+            </div>
+
+
+
+
+            <label for="num_records" class="font-monospace">Number of records:</label>
+            <input type="number" id="num_records" name="num_records" required>
+
+            <div id="formRow">
+                <label for="format" class="font-monospace">Format:</label>
+                <select id="format" name="format" class="format">
+                    <option value="" disabled selected style="display:none;">- Select -</option>
+                    <option value="json">JSON</option>
+                    <option value="csv">CSV</option>
+                    <option value="txt">TXT</option>
+                </select>
+            </div>
+
+            <div id="delimiterRow" style="display: none;">
+                <label for="delimiter" class="font-monospace">Delimiter:</label>
+                <select id="delimiter" name="delimiter">
+                    <option value=",">Comma (,)</option>
+                    <option value=";">Semicolon (;)</option>
+                    <option value="tab">Tab</option>
+                    <option value=" ">Space</option>
+                    <option value="|"> (pipe)</option>
+
+                </select>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" id="GenBtn" class="btn btn-warning">Generate</button>
+                <button type="button" id="addBtn" class="btn btn-success">Add</button>
+                <button type="button" id="deleteBtn" class="btn btn-danger">Clear</button>
+                <button type="button" id="downloadBtn" class="btn btn-info">Download</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="container">
+        <div class="btn-copyDiv">
+            <button id="copyBtn"><i class="fas fa-copy"></i></button>
+            <div class="output" id="generatedCode">
+                {% if code %}
+                <pre>{{code }}</pre>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <!-- </div> -->
+    <!-- PopUP -->
+    <div id="myPopup" class="popup">
+        <div class="popup-content">
+            <p style="font-weight: bold; color: #f9f9f9; white-space: nowrap;">Are you sure you want to clear all rows?
+            </p>
+            <div class="popup-button">
+                <button type="button" id="popupYes">Clear</button>
+                <button type="button" id="popupNo">Cancel</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
